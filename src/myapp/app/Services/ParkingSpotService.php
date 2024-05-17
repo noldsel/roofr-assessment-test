@@ -61,6 +61,10 @@ class ParkingSpotService
             return true;
         }
 
+        if ($params['vehicle_type'] === 'van' && $parkingSpot->type === 'van') {
+            return true;
+        }
+
 
         // Vans are also permitted to park, but they need a space equivalent to three regular spots.
         if ($params['vehicle_type'] === 'van' && $parkingSpot->type !== 'van') {

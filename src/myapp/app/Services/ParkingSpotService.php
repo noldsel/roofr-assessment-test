@@ -67,14 +67,22 @@ class ParkingSpotService
 
 
         // Vans are also permitted to park, but they need a space equivalent to three regular spots.
-        if ($params['vehicle_type'] === 'van' && $parkingSpot->type !== 'van') {
+        if ($params['vehicle_type'] === 'van' && $parkingSpot->type === 'regular') {
             // The parking layout is assumed to be one row of parking spots. So 'next spot'
             //      means either on the left or on the right of the 'current spot'
-            $spotOnTheRight = ParkingSpot::find($parkingSpot->id + 1);
-            $spotOnTheLeft = ParkingSpot::find($parkingSpot->id - 1);
+            $spotOnTheRight = ParkingSpot::where([
+                'id' => $parkingSpot->id + 1,
+                'is_available' => true,
+                'type' => 'regular'
+            ])->get();
 
-            if (!empty($spotOnTheRight) && !empty($spotOnTheLeft)
-                && $spotOnTheRight->is_available && $spotOnTheLeft->is_available) {
+            $spotOnTheLeft = ParkingSpot::where([
+                'id' => $parkingSpot->id - 1,
+                'is_available' => true,
+                'type' => 'regular'
+            ])->get();
+
+            if (!empty($spotOnTheRight) && !empty($spotOnTheLeft)) {
                 return true;
             }
 

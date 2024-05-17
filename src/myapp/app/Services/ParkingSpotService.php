@@ -57,8 +57,8 @@ class ParkingSpotService
         }
 
         // Cars can take any regular spot within the parking lot.
-        if ($params['vehicle_type'] === 'car' && $parkingSpot->type !== 'regular') {
-            return false;
+        if ($params['vehicle_type'] === 'car' && $parkingSpot->type == 'regular') {
+            return true;
         }
 
 
@@ -68,13 +68,15 @@ class ParkingSpotService
             //      means either on the left or on the right of the 'current spot'
             $spotOnTheRight = ParkingSpot::find($parkingSpot->id + 1);
             $spotOnTheLeft = ParkingSpot::find($parkingSpot->id - 1);
-            if (empty($spotOnTheRight) || empty($spotOnTheRight)) {
-                return false;
+
+            if (!empty($spotOnTheRight) && !empty($spotOnTheLeft)
+                && $spotOnTheRight->is_available && $spotOnTheLeft->is_available) {
+                return true;
             }
 
         }
 
-        return true;
+        return false;
 
     }
 

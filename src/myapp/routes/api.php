@@ -18,6 +18,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('parking-spot/{parking_spot}/park', [App\Http\Controllers\ParkingSpotController::class, 'park'])->name('park');
-Route::post('parking-spot/{parking_spot}/unpark', [App\Http\Controllers\ParkingSpotController::class, 'unpark'])->name('unpark');
+// not sure if the convention is camel case or snake case for laravel model resolution (parkingSpot vs parking_spot)
+Route::post('parking-spot/{parkingSpot}/park', [App\Http\Controllers\ParkingSpotController::class, 'park'])->name('park');
+Route::post('parking-spot/{{parkingSpot}}/unpark', [App\Http\Controllers\ParkingSpotController::class, 'unpark'])->name('unpark');
 Route::get('parking-lot', [App\Http\Controllers\ParkingSpotController::class, 'list'])->name('list');

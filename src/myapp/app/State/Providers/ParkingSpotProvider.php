@@ -19,6 +19,6 @@ class ParkingSpotProvider
             $model = $model->search($params['search']);
         }
 
-        return $model->with('type')->orderBy($tableName.'.id', 'desc')->paginate(Arr::get($params, 'per_page', 12));
+        return $model->with('type')->orderBy($tableName.'.id', 'desc');
     }
 }

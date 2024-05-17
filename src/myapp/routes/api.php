@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('parking-spot/{parking_spot}/park', [App\Http\Controllers\ParkingSpotController::class, 'park'])->name('park');
+Route::post('parking-spot/{parking_spot}/unpark', [App\Http\Controllers\ParkingSpotController::class, 'unpark'])->name('unpark');
+Route::get('parking-lot', [App\Http\Controllers\ParkingSpotController::class, 'list'])->name('list');
